@@ -1,8 +1,40 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/user_model.dart';
+import '../model/user_model.dart';
 
 class ApiServices {
+
+//base url :- sbme use krne k  liye Uri parse krte h to 
+
+static const String baseUrl = 'https://jsonplaceholder.typicode.com';
+
+
+//Auth token ( // Real application mein token login ke baad mil sakta hai. JSONPlaceholder ko token ki zarurat nahi hai, isliye abhi null rakha hai.Jab real API use karoge: static const String? token = 'YOUR_TOKEN';)
+static const String? token = null; 
+
+
+//common headers(// Har request mein same headers ki zarurat ho sakti hai.Isliye ek jagah bana diye.)
+
+Map<String,String> getHeaders(){
+  final headers = <String , String>{
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
+  if(token != null && token!.isNotEmpty){
+    headers['Authorization'] = 'Bearer$token';
+  } 
+  return headers;
+}
+
+
+
+
+
+
+
+
+
 
   // Humne function mein ek optional 'searchName' query parameter le liya
   Future<List<UserModel>> getUsers({String? searchQuery}) async { 
